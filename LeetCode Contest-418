@@ -1,0 +1,46 @@
+          ---------Question------------
+        Maximum Possible Number By Binary Concatenation
+        Explaination : Given an array of integers nums of size 3;
+                        Return the maximum possible number whose binary representation can be formed by concatenating the binary representation of all elements in nums in same order;
+
+        Example: nums=[1,2,3]
+          1->1
+          2->10
+          3->11
+     After concatenation; "11110"     in the order =[3,1,2]  ; which represents binary number =30;
+
+
+     ALGORITHM:
+   @ Make a funcn 'Convert to Binary'
+   @ Sort the array in order to maximize the number after concatenating
+   @ Sort using a comparator Funcn;
+   @ Then convert those binary number into decimal number ;
+
+
+ ===================Code Part=======================
+
+ string toBinary(int num){
+           string binary="";
+           while(num>0){
+            binary=(num%2 == 0 ? "0" :"1")+binary;
+                  num/=2;
+           }
+         return binary;
+   }
+  int maxGoodNumber(vector<int>&nums){
+        // Comparator Function
+   auto compare =[this](int a,int b){
+   string binA =toBinary(a);
+    string binB =toBinary(b);
+    return(binA+binB)>(binB+binA);
+
+};
+ sort(nums.begin(),nums.end(),compare);
+ string binary="";
+  for(int num:nums){
+binary+=toBinary(num);
+      }
+// Convert into decimal form
+int result = stoi(binary,nullptr,2);
+return result;
+}
